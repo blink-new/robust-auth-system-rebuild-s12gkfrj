@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { toast } from 'react-hot-toast'
+import { toast } from '../components/ui/use-toast'
 import type { AuthError } from '@supabase/supabase-js'
 
 export interface AuthErrorHandler {
@@ -59,14 +59,10 @@ export function useAuthErrors(): AuthErrorHandler {
     const message = getErrorMessage(error)
     const contextMessage = context ? `${context}: ${message}` : message
 
-    toast.error(contextMessage, {
-      duration: 5000,
-      position: 'top-right',
-      style: {
-        background: '#fee2e2',
-        color: '#dc2626',
-        border: '1px solid #fecaca'
-      }
+    toast({
+      title: "Authentication Error",
+      description: contextMessage,
+      variant: "destructive"
     })
 
     // Log error for debugging

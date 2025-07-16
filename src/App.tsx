@@ -5,8 +5,9 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { LoginForm } from './components/auth/LoginForm'
 import { RegisterForm } from './components/auth/RegisterForm'
 import { EmailVerification } from './components/auth/EmailVerification'
+import { AuthCallback } from './components/auth/AuthCallback'
 import { Dashboard } from './components/Dashboard'
-import { Toaster } from 'react-hot-toast'
+import { Toaster } from './components/ui/toaster'
 
 function App() {
   return (
@@ -34,6 +35,12 @@ function App() {
                   </div>
                 </ProtectedRoute>
               } 
+            />
+            
+            {/* Auth Callback Route */}
+            <Route 
+              path="/auth/callback" 
+              element={<AuthCallback />} 
             />
             
             {/* Email Verification Route */}
@@ -108,18 +115,8 @@ function App() {
             />
           </Routes>
         </div>
+        <Toaster />
       </Router>
-      <Toaster 
-        position="top-right"
-        toastOptions={{
-          duration: 4000,
-          style: {
-            background: '#fff',
-            color: '#333',
-            border: '1px solid #e5e7eb'
-          }
-        }}
-      />
     </AuthProvider>
   )
 }

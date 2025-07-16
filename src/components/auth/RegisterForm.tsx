@@ -9,7 +9,7 @@ import { AuthService } from '../../services/authService'
 import { useAuthErrors } from '../../hooks/useAuthErrors'
 import { PasswordStrengthIndicator } from './PasswordStrengthIndicator'
 import { validatePassword } from '../../utils/passwordValidation'
-import { toast } from 'react-hot-toast'
+import { toast } from '../ui/use-toast'
 
 export function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -30,17 +30,29 @@ export function RegisterForm() {
     e.preventDefault()
     
     if (!formData.email || !formData.password || !formData.confirmPassword) {
-      toast.error('Please fill in all fields')
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive"
+      })
       return
     }
 
     if (!passwordValidation.isValid) {
-      toast.error('Please ensure your password meets all requirements')
+      toast({
+        title: "Error", 
+        description: "Please ensure your password meets all requirements",
+        variant: "destructive"
+      })
       return
     }
 
     if (!passwordsMatch) {
-      toast.error('Passwords do not match')
+      toast({
+        title: "Error",
+        description: "Passwords do not match", 
+        variant: "destructive"
+      })
       return
     }
 
@@ -55,18 +67,19 @@ export function RegisterForm() {
       if (error) {
         handleAuthError(error, 'Registration failed')
       } else if (user) {
-        toast.success('Account created successfully! Please check your email to verify your account.', {
-          duration: 5000,
-          style: {
-            background: '#dcfce7',
-            color: '#166534',
-            border: '1px solid #bbf7d0'
-          }
+        toast({
+          title: "Success!",
+          description: "Account created successfully! Please check your email to verify your account.",
+          variant: "default"
         })
       }
     } catch (error) {
       console.error('Registration error:', error)
-      toast.error('An unexpected error occurred. Please try again.')
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      })
     } finally {
       setIsLoading(false)
     }
